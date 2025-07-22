@@ -95,19 +95,21 @@ galleryContainer.addEventListener('click', (event) => {
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = document.querySelector('.lightbox__image');
 
-// Відкриття модального вікна
+// Делегування. Відкриття модалки
 galleryContainer.addEventListener('click', (event) => {
   event.preventDefault();
-  const img = event.target;
 
-  if (img.nodeName !== 'IMG') return;
+  const imgEl = event.target;
+  if (!imgEl.classList.contains('gallery-image')) return;
 
-  lightbox.classList.add('visible');
-  lightboxImage.src = img.dataset.source;
-  lightboxImage.alt = img.alt;
+  const instance = basicLightbox.create(`
+    <img src="${imgEl.dataset.source}" alt="${imgEl.alt}" width="800" height="600">
+  `);
+
+  instance.show();
 });
 
-// Закриття при кліку на фон || зображення
+// Закриття модалки при кліку на фон || зображення
 lightbox.addEventListener('click', (event) => {
   if (event.target === lightbox || lightboxImage) {
     closeLightbox();
