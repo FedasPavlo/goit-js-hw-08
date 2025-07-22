@@ -86,16 +86,11 @@ const galleryMarkup = images
 
 galleryContainer.innerHTML = galleryMarkup;
 
-// Заборона стандартної поведінки посилань
-galleryContainer.addEventListener('click', (event) => {
-  event.preventDefault();
-});
-
+// Делегування. Відкриття/закриття модалки
 
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = document.querySelector('.lightbox__image');
 
-// Делегування. Відкриття модалки
 galleryContainer.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -103,21 +98,9 @@ galleryContainer.addEventListener('click', (event) => {
   if (!imgEl.classList.contains('gallery-image')) return;
 
   const instance = basicLightbox.create(`
-    <img src="${imgEl.dataset.source}" alt="${imgEl.alt}" width="800" height="600">
+    <img src="${imgEl.dataset.source}" alt="${imgEl.alt}" style="width: 1112px; height: 640px;">
   `);
 
   instance.show();
 });
 
-// Закриття модалки при кліку на фон || зображення
-lightbox.addEventListener('click', (event) => {
-  if (event.target === lightbox || lightboxImage) {
-    closeLightbox();
-  }
-});
-
-function closeLightbox() {
-  lightbox.classList.remove('visible');
-  lightboxImage.src = '';
-  lightboxImage.alt = '';
-}
